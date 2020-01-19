@@ -306,6 +306,7 @@ There are a ton of resources out there. Unfortunately I had to cobble many toget
 * [Nomad Configuration info](https://www.nomadproject.io/docs/configuration/index.html)
 * [iocage for Configuring Jails](https://github.com/fractalcells/ansible-iocage)
 * [Configure Jail on Digital Ocean droplet](https://www.kirkg.us/posts/how-to-configure-a-freebsd-jail-on-a-digital-ocean-droplet/)
+* [Nomad FreeBSD Jail driver](https://github.com/cneira/jail-task-driver#installation)
 
 ## Other Interesting Finds
 
