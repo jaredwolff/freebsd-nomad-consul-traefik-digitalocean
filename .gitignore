@@ -1,0 +1,7 @@
+terraform/.terraform/*
+*.tfvars
+.vagrant
+files/*
+*.tfstate*
+hosts
+.gitbackup
