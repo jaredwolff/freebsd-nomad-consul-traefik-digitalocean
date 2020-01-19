@@ -260,7 +260,7 @@ Then run `nomad job plan nomad/traefik.hcl`
 An example output is something like this:
 
 ```
-$ nomad job plan traefik.nomad 
+$ nomad job plan traefik.nomad
 Job: "traefik"
 Task Group: "traefik" (1 ignore)
   Task: "test01"
@@ -298,10 +298,17 @@ Conveniently, some important ports are forwarded in the `Vagrantfile` including 
 
 ## Resources
 
-There are a ton of resources out there. Unfortunately I had to cobble many together to get even this far in this project. Hashicorp's tutorials and guides have been great. Particularly the ones on Nomad. They get you up and runing lightening speed compared to my learning process here. 
+There are a ton of resources out there. Unfortunately I had to cobble many together to get even this far in this project. Hashicorp's tutorials and guides have been great. Particularly the ones on Nomad. They get you up and runing lightening speed compared to my learning process here.
 
 * [Learn Nomad @ Hashicorp](https://learn.hashicorp.com/nomad)
 * [Learn Consul @ Hashicorp](https://learn.hashicorp.com/consul)
 * [Consul Configuration info](https://www.consul.io/docs/agent/options.html)
 * [Nomad Configuration info](https://www.nomadproject.io/docs/configuration/index.html)
+* [iocage for Configuring Jails](https://github.com/fractalcells/ansible-iocage)
+* [Configure Jail on Digital Ocean droplet](https://www.kirkg.us/posts/how-to-configure-a-freebsd-jail-on-a-digital-ocean-droplet/)
 
+## Other Interesting Finds
+
+Here are some other interesting finds while playing around on this project:
+
+* [Bastille](https://github.com/BastilleBSD/bastille) aims to make building jails easier.
