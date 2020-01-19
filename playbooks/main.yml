@@ -1,0 +1,27 @@
+---
+# File: main.yml - Main tasks for Nomad & Consul
+
+- name: Installing Dependencies
+  hosts: all
+  become: yes
+  become_user: vagrant
+
+  tasks:
+    - name: Import defaults
+      include_vars: defaults.yml
+
+    - name: Install `pkg` deps
+      include_tasks: tasks/install.yml
+
+    - name: Install Traefik
+      include_tasks: tasks/traefik.yml
+
+    - name: Configure Consul
+      include_tasks: tasks/consul.yml
+
+    - name: Configure Nomad
+      include_tasks: tasks/nomad.yml
+
+# TODO: determine whether or not it's a client
+# TODO: deploy a configuration as provided in this repo
+# TODO: deploy a list of jobs as another ansible script (or something..)

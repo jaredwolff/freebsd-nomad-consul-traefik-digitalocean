@@ -1,0 +1,24 @@
+---
+# File: main.yml - Main default variables for setup
+
+## Dependencies for `pkg`
+os_packages:
+  - gtar
+  - freecolor
+  - nomad
+  - consul
+  - go
+  - git-lite
+  - postgresql12-server-12.1
+  - postgresql12-client-12.1
+  - influxdb
+  - py36-iocage
+
+## Traefik Related Variables
+traefik_download_file_name: traefik_v2.1.2_freebsd_amd64.tar.gz
+traefik_download_url:  https://github.com/containous/traefik/releases/download/v2.1.2/{{traefik_download_file_name}}
+traefik_download_hash: sha256:7a43d832972bbb99dba324f52fc31f786aa0590078a7b538dc77814026dc918e
+
+## Consul related
+consul_server: true
+nomad_server: true

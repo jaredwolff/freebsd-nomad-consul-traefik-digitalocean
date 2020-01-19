@@ -1,0 +1,19 @@
+---
+# File: traefik.yml - package installation tasks for Traefik
+
+- name: Download Traefik
+  get_url:
+    url: "{{traefik_download_url}}"
+    dest: /tmp/
+    checksum: "{{traefik_download_hash}}"
+
+- name: Extract & Install Traefik
+  unarchive:
+    remote_src: yes
+    src: /tmp/{{traefik_download_file_name}}
+    dest: /usr/local/bin/
+  become: true
+  become_user: root
+
+# TODO: configure consul daemon
+# TODO: copy over nomad configuration depending on type

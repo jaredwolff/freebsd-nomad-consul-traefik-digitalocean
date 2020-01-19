@@ -1,0 +1,6 @@
+# Setting up jails using ansible-iocage
+# https://github.com/fractalcells/ansible-iocage
+
+# https://www.kirkg.us/posts/how-to-configure-a-freebsd-jail-on-a-digital-ocean-droplet/
+
+# https://github.com/BastilleBSD/bastille

@@ -1,0 +1,79 @@
+---
+# File: nomad.yml - package installation tasks for nomad
+
+# Make sure that Consul is set up as a service
+- name: Copy rc.d scripts.
+  copy:
+    src: "{{item}}"
+    dest: /etc/rc.d/
+    mode: 0555
+  with_fileglob:
+  - ../etc/rc.d/nomad*
+  become: true
+  become_user: root
+
+# Create dir to put configurations in
+- name: Create /etc/nomad/ directory
+  file:
+    path: /etc/nomad/
+    state: directory
+  become: true
+  become_user: root
+
+# Copy the configuration files for server
+- name: Copy nomad server config
+  copy:
+    backup: true
+    src: ../etc/nomad/server.hcl
+    dest: /etc/nomad/server.hcl
+    mode: 0640
+  become: true
+  become_user: root
+  when: nomad_server
+
+# Copy the configuration files for client
+- name: Copy nomad client config
+  copy:
+    backup: true
+    src: ../etc/nomad/client.hcl
+    dest: /etc/nomad/client.hcl
+    mode: 0640
+  become: true
+  become_user: root
+  when: not nomad_server
+
+# Install the jail task driver
+# Note: Default install to ~/go
+# More info here: https://github.com/cneira/jail-task-driver
+- name: Install FreeBSD Jail Task Driver
+  command: go get github.com/cneira/jail-task-driver
+  tags: installation
+  become: true
+  become_user: root
+
+# Make sure plugins exists
+- name: Make Sure `nomad` Plugins dir exists
+  file:
+    path: /var/nomad/plugins/
+    state: directory
+  become: true
+  become_user: root
+
+# Move driver to plugins
+- name: Move Jail Task Driver to Plugins dir
+  copy:
+    remote_src: true
+    src: ~/go/bin/jail-task-driver
+    dest: /var/nomad/plugins/
+    mode: 0555
+  become: true
+  become_user: root
+
+  # Start the server/client
+- name: Start the nomad server
+  service:
+   name: nomad
+   state: restarted
+   enabled: yes
+  become: true
+  become_user: root

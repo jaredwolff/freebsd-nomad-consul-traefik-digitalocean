@@ -1,0 +1,49 @@
+---
+# File: consul.yml - package installation tasks for consul
+
+# Make sure that Consul is set up as a service
+- name: Copy rc.d script.
+  copy:
+    src: ../etc/rc.d/consul
+    dest: /etc/rc.d/consul
+    mode: 0555
+  become: true
+  become_user: root
+
+# Create dir to put configurations in
+- name: Create /etc/consul/ directory
+  file:
+    path: /etc/consul/
+    state: directory
+  become: true
+  become_user: root
+
+# Copy the configuration files for client
+- name: Copy consul config
+  copy:
+    backup: true
+    src: ../etc/consul/consul.hcl
+    dest: /etc/consul/consul.hcl
+    mode: 0640
+  become: true
+  become_user: root
+
+# Copy the configuration files
+- name: Copy consul server config
+  copy:
+    backup: true
+    src: ../etc/consul/server.hcl
+    dest: /etc/consul/server.hcl
+    mode: 0640
+  become: true
+  become_user: root
+  when: consul_server
+
+# Start the service
+- name: Start the consul service
+  service:
+   name: consul
+   state: restarted
+   enabled: yes
+  become: true
+  become_user: root

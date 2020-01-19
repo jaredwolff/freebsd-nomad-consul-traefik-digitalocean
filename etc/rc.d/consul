@@ -1,0 +1,18 @@
+#!/bin/sh
+
+. /etc/rc.subr
+
+name=consul
+rcvar=consul_enable
+
+# pid file to track if the process is running or not
+pidFile="/var/run/${name}.pid"
+procname="/usr/local/bin/${name}"
+proc_args="agent -config-file=/etc/${name}/ -ui"
+
+# daemonizing the program
+command="/usr/sbin/daemon"
+command_args="-t ${name} -P ${pidFile} -S ${procname} ${proc_args}"
+
+load_rc_config $name
+run_rc_command "$1"
