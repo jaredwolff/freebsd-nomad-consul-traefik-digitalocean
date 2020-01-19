@@ -1,5 +1,9 @@
 # Consul and Nomad on FreeBSD using Ansible + Terraform
 
+**Before we start:** this was an experiment to see what it would take to get Nomad + Consul running in a sane way using FreeBSD Jails. The Vagrant setup provisions and starts the Consul and Nomad. Beyond that nothing is tested.
+
+---
+
 This project installs a FreeBSD based Nomad cluster on Digital Ocean.
 
 It uses Terraform to set up the infrastructure. Then finishes the server configuration
