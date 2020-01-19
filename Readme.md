@@ -249,3 +249,59 @@ traefik successfully created!
 The mount point for this jail is: `/zroot/iocage/jails/traefik/root`
 
 We now can run a test job to see if it takes!
+
+### Running the job
+
+Nomad uses the concept of a *job* for running tasks across a cluster. Here's how you can do it.
+
+First, copy the `nomad` folder to the FreeBSD server in question.
+Then run `nomad job plan nomad/traefik.hcl`
+
+An example output is something like this:
+
+```
+$ nomad job plan traefik.nomad 
+Job: "traefik"
+Task Group: "traefik" (1 ignore)
+  Task: "test01"
+
+Scheduler dry-run:
+- All tasks successfully allocated.
+
+Job Modify Index: 419
+To submit the job with version verification run:
+
+nomad job run -check-index 419 traefik.nomad
+
+When running the job with the check-index flag, the job will only be run if the
+server side version matches the job modify index returned. If the index has
+changed, another user has modified the job and the plan's results are
+potentially invalid.
+```
+
+This will set up your job to be deployed on your cluster.
+Then, you can run `nomad job run -check-index 419 traefik.nomad`. Your `check-index` may be different so check the output of your `nomad job plan`.
+
+You can then check the status using `nomad job status`. Example:
+
+```
+$ nomad job status
+ID        Type     Priority  Status   Submit Date
+non-vnet  service  50        dead     2020-01-19T04:06:01Z
+test      service  50        running  2020-01-19T04:33:18Z
+traefik   service  50        running  2020-01-19T04:40:03Z
+```
+
+Conveniently, some important ports are forwarded in the `Vagrantfile` including 4646. This is the UI for Nomad. So simply go to your web broswer and put in: `http://localhost:4646`. Your web console should show up. You can check status and even resource utilization all in the same place!
+
+![Screenshot of Nomad Interface](images/nomad_status.png)
+
+## Resources
+
+There are a ton of resources out there. Unfortunately I had to cobble many together to get even this far in this project. Hashicorp's tutorials and guides have been great. Particularly the ones on Nomad. They get you up and runing lightening speed compared to my learning process here. 
+
+* [Learn Nomad @ Hashicorp](https://learn.hashicorp.com/nomad)
+* [Learn Consul @ Hashicorp](https://learn.hashicorp.com/consul)
+* [Consul Configuration info](https://www.consul.io/docs/agent/options.html)
+* [Nomad Configuration info](https://www.nomadproject.io/docs/configuration/index.html)
+
